@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище branch_and_checks_Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="branch">
+          <Key>
+            <PropertyRef Name="id_Branch" />
+          </Key>
+          <Property Name="id_Branch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="House" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_City" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Checks">
+          <Key>
+            <PropertyRef Name="Id_Checks" />
+          </Key>
+          <Property Name="Id_Checks" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Products" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Id_Branch" Type="int" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id_City" />
+          </Key>
+          <Property Name="Id_City" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id_Product" />
+          </Key>
+          <Property Name="Id_Product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_branch_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="branch" Type="Self.branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id_City" />
+            </Principal>
+            <Dependent Role="branch">
+              <PropertyRef Name="Id_City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checks_branch">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="Checks" Type="Self.Checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="id_Branch" />
+            </Principal>
+            <Dependent Role="Checks">
+              <PropertyRef Name="Id_Branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checks_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Checks" Type="Self.Checks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id_Product" />
+            </Principal>
+            <Dependent Role="Checks">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище branch_and_checks_ModelContainer">
+          <EntitySet Name="branch" EntityType="Self.branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Checks" EntityType="Self.Checks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_branch_City" Association="Self.FK_branch_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="branch" EntitySet="branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checks_branch" Association="Self.FK_Checks_branch">
+            <End Role="branch" EntitySet="branch" />
+            <End Role="Checks" EntitySet="Checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checks_Products" Association="Self.FK_Checks_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Checks" EntitySet="Checks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="branch_and_checks_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="branch">
+          <Key>
+            <PropertyRef Name="id_Branch" />
+          </Key>
+          <Property Name="id_Branch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="House" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_City" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FK_branch_City" FromRole="branch" ToRole="City" />
+          <NavigationProperty Name="Checks" Relationship="Self.FK_Checks_branch" FromRole="branch" ToRole="Checks" />
+        </EntityType>
+        <EntityType Name="Check">
+          <Key>
+            <PropertyRef Name="Id_Checks" />
+          </Key>
+          <Property Name="Id_Checks" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Products" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_Branch" Type="Int32" />
+          <NavigationProperty Name="branch" Relationship="Self.FK_Checks_branch" FromRole="Checks" ToRole="branch" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Checks_Products" FromRole="Checks" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id_City" />
+          </Key>
+          <Property Name="Id_City" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="branches" Relationship="Self.FK_branch_City" FromRole="City" ToRole="branch" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id_Product" />
+          </Key>
+          <Property Name="Id_Product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Checks" Relationship="Self.FK_Checks_Products" FromRole="Products" ToRole="Checks" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_branch_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="branch" Type="Self.branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id_City" />
+            </Principal>
+            <Dependent Role="branch">
+              <PropertyRef Name="Id_City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checks_branch">
+          <End Role="branch" Type="Self.branch" Multiplicity="0..1" />
+          <End Role="Checks" Type="Self.Check" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="id_Branch" />
+            </Principal>
+            <Dependent Role="Checks">
+              <PropertyRef Name="Id_Branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checks_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Checks" Type="Self.Check" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id_Product" />
+            </Principal>
+            <Dependent Role="Checks">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="branch_and_checks_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="branches" EntityType="Self.branch" />
+          <EntitySet Name="Checks" EntityType="Self.Check" />
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_branch_City" Association="Self.FK_branch_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="branch" EntitySet="branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checks_branch" Association="Self.FK_Checks_branch">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="Checks" EntitySet="Checks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checks_Products" Association="Self.FK_Checks_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Checks" EntitySet="Checks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище branch_and_checks_ModelContainer" CdmEntityContainer="branch_and_checks_Entities">
+          <EntitySetMapping Name="branches">
+            <EntityTypeMapping TypeName="branch_and_checks_Model.branch">
+              <MappingFragment StoreEntitySet="branch">
+                <ScalarProperty Name="id_Branch" ColumnName="id_Branch" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Id_City" ColumnName="Id_City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Checks">
+            <EntityTypeMapping TypeName="branch_and_checks_Model.Check">
+              <MappingFragment StoreEntitySet="Checks">
+                <ScalarProperty Name="Id_Checks" ColumnName="Id_Checks" />
+                <ScalarProperty Name="Id_Products" ColumnName="Id_Products" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id_Branch" ColumnName="Id_Branch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="branch_and_checks_Model.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Id_City" ColumnName="Id_City" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="branch_and_checks_Model.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id_Product" ColumnName="Id_Product" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="branch_and_checks_Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
